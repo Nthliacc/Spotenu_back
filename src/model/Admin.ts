@@ -1,11 +1,11 @@
-export class User{
+export class Admin{
     constructor(
     private id: string,
     private name: string,
     private nickname: string,
     private email: string,
     private password: string,
-    private role: UserRole
+    private role: AdminRole
     ){}
 
     getId = () => this.id;
@@ -20,31 +20,37 @@ export class User{
     setNickame = (nickname: string) => this.nickname = nickname;
     setEmail = (email: string) => this.email = email;
     setPassword = (password: string) => this.password = password;
-    setRole = (role: UserRole) => this.role = role;
+    setRole = (role: AdminRole) => this.role = role;
 
-   static stringToUserRole(input: string): UserRole{
+   static stringToUserRole(input: string): AdminRole{
         switch (input) {
             case "BAND":
-              return UserRole.BAND;
+              return AdminRole.BAND;
             case "PREMIUM_USER":
-              return UserRole.PREMIUM_USER;
+              return AdminRole.PREMIUM_USER;
             case "FREE_USER":
-                return UserRole.FREE_USER;
+                return AdminRole.FREE_USER;
             case "ADMIN":
-                return UserRole.ADMIN;
+                return AdminRole.ADMIN;
             default:
               throw new Error("Invalid user role");
           }
     }
 
-    static toUserModel(user: any): User {
-        return new User(user.id, user.name, user.nickname, user.email, user.password, User.stringToUserRole(user.role));
+    static toUserModel(admin: any): Admin {
+        return new Admin(
+            admin.id, 
+            admin.name, 
+            admin.nickname, 
+            admin.email, 
+            admin.password, 
+            admin.stringToUserRole(admin.role));
       }
 
 
 }
 
-export interface UserInputDTO{
+export interface AdminInputDTO{
     email: string;
     password: string;
     name: string;
@@ -57,7 +63,7 @@ export interface LoginInputDTO{
     password: string;
 }
 
-export enum UserRole{
+export enum AdminRole{
     BAND = "BAND",
     PREMIUM_USER = "PREMIUM_USER",
     FREE_USER = "FREE_USER",
