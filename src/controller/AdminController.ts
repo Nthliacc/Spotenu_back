@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { UserInputDTO, LoginInputDTO} from "../model/Users";
-import { UserBusiness } from "../business/UserBusiness";
+import { AdminBusiness } from "../business/AdminBusiness";
 import { BaseDatabase } from "../data/BaseDatabase";
 
-export class UserController {
+export class AdminController {
     async signup(req: Request, res: Response) {
         try {
 
@@ -14,9 +14,10 @@ export class UserController {
                 password: req.body.password,
                 role: req.body.role
             };
+            //const tokenAdmin = req.headers.token as string;
 
-            const userBusiness = new UserBusiness();
-            const token = await userBusiness.createUser(input);
+            const adminBusiness = new AdminBusiness();
+            const token = await adminBusiness.createAdmin(input);
 
             res.status(200).send({ token });
 
@@ -36,8 +37,8 @@ export class UserController {
                 password: req.body.password
             };
 
-            const userBusiness = new UserBusiness();
-            const token = await userBusiness.getUserByEmail(loginData);
+            const adminBusiness = new AdminBusiness();
+            const token = await adminBusiness.getUserByEmail(loginData);
 
             res.status(200).send({ token });
 

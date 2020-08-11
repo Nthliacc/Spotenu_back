@@ -1,14 +1,15 @@
 import { BaseDatabase } from "./BaseDatabase";
-import { User } from "../model/User";
+import { Users } from "../model/Users";
 
 export class UserDatabase extends BaseDatabase {
 
-  private static TABLE_NAME = "";
+  private static TABLE_NAME = "Users_Spotenu";
 
   public async createUser(
     id: string,
     email: string,
     name: string,
+    nickname: string,
     password: string,
     role: string
   ): Promise<void> {
@@ -18,6 +19,7 @@ export class UserDatabase extends BaseDatabase {
           id,
           email,
           name,
+          nickname,
           password,
           role
         })
@@ -27,13 +29,13 @@ export class UserDatabase extends BaseDatabase {
     }
   }
 
-  public async getUserByEmail(email: string): Promise<User> {
+  public async getUserByEmail(email: string): Promise<Users> {
     const result = await this.getConnection()
       .select("*")
       .from(UserDatabase.TABLE_NAME)
       .where({ email });
 
-    return User.toUserModel(result[0]);
+    return Users.toUserModel(result[0]);
   }
 
 }

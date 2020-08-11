@@ -4,16 +4,19 @@ import { IdGenerator } from "../services/IdGenerator";
 import { HashManager } from "../services/HashManager";
 import { Authenticator } from "../services/Authenticator";
 
-export class UserBusiness {
+export class AdminBusiness {
 
-    async createUser(user: UserInputDTO) {
+    async createAdmin(user: UserInputDTO) {
 
         const idGenerator = new IdGenerator();
         const id = idGenerator.generate();
 
-        if(user.password.length < 6){
+        if(user.password.length < 10){
             throw new Error("Invalid password")
         };
+        // if(!tokenAdmin){
+        //     throw new Error("Don't authorization")  
+        // };
 
         const hashManager = new HashManager();
         const hashPassword = await hashManager.hash(user.password);
