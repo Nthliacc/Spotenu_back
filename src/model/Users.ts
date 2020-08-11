@@ -1,11 +1,11 @@
 export class Users{
     constructor(
-    private id: string,
-    private name: string,
-    private nickname: string,
-    private email: string,
-    private password: string,
-    private role: UsersRole
+        protected id: string,
+        protected name: string,
+        protected nickname: string,
+        protected email: string,
+        protected password: string,
+        protected role: UsersRole
     ){}
 
     getId = () => this.id;
@@ -46,8 +46,6 @@ export class Users{
             user.password, 
             Users.stringToUserRole(user.role));
       }
-
-
 }
 
 export interface UserInputDTO{

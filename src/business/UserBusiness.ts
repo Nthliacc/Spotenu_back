@@ -11,7 +11,9 @@ export class UserBusiness {
         const idGenerator = new IdGenerator();
         const id = idGenerator.generate();
 
-        if(user.password.length < 6){
+        if( user.role === "ADMIN" && user.password.length < 10 ){
+            throw new Error("Invalid password")
+        } else if( user.password.length < 6 ){
             throw new Error("Invalid password")
         };
 

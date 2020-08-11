@@ -14,9 +14,17 @@ export class UserController {
                 password: req.body.password,
                 role: req.body.role
             };
+            
+            if(input.role === "ADMIN"){
+                const tokenAdmin = req.headers.token as string;
 
-            const userBusiness = new UserBusiness();
-            const token = await userBusiness.createUser(input);
+                if(!tokenAdmin){
+                    throw new Error("Don't authorization")  
+                };
+            return tokenAdmin
+            };
+
+            const token = await new UserBusiness().createUser(input);
 
             res.status(200).send({ token });
 
@@ -36,8 +44,7 @@ export class UserController {
                 password: req.body.password
             };
 
-            const userBusiness = new UserBusiness();
-            const token = await userBusiness.getUserByEmail(loginData);
+            const token = await new UserBusiness().getUserByEmail(loginData);
 
             res.status(200).send({ token });
 
