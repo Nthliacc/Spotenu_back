@@ -1,4 +1,4 @@
-import { Users, UsersRole } from "./Users";
+import { Users, UsersRole, UserInputDTO } from "./Users";
 
 export class Band extends Users{
     constructor(
@@ -9,7 +9,7 @@ export class Band extends Users{
         password: string,
         role: UsersRole,
         private description: string,
-        private status: boolean = true, 
+        private status: boolean = false, 
     ){ 
         super(id, name, nickname, email, password, role)
     };
@@ -45,10 +45,11 @@ export class Band extends Users{
       };
 };
 
-export interface BandInputDTO{
+export interface BandInputDTO extends UserInputDTO{
     name: string;
     nickname: string;
     email: string;
     password: string;
     description: string;
+    role: string
 };
