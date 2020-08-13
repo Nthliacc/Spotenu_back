@@ -24,8 +24,8 @@ export class UserController {
                     nickname: req.body.nickname,
                     email: req.body.email,                   
                     password: req.body.password,
-                    description: req.body.description,
-                    role: req.body.role
+                    role: req.body.role,
+                    description: req.body.description                    
                 };
             } else {
                 input = {
@@ -44,7 +44,6 @@ export class UserController {
         } catch (error) {
             res.status(400).send({ error: error.message });
         }
-
         await BaseDatabase.destroyConnection();
     }
 
@@ -63,8 +62,7 @@ export class UserController {
         } catch (error) {
             res.status(400).send({ error: error.message });
         }
-
         await BaseDatabase.destroyConnection();
     }
 
-}
+};

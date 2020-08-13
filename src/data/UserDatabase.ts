@@ -1,5 +1,6 @@
 import { BaseDatabase } from "./BaseDatabase";
 import { Users } from "../model/Users";
+import { Band } from "../model/Band";
 
 export class UserDatabase extends BaseDatabase {
 
@@ -13,7 +14,7 @@ export class UserDatabase extends BaseDatabase {
     password: string,
     role: string,
     description?: string,
-    status?: boolean
+    status?: number
   ): Promise<void> {
     try {
       await this.getConnection()
@@ -41,5 +42,17 @@ export class UserDatabase extends BaseDatabase {
       .orWhere({nickname: emailOrNickname});
 
     return Users.toUserModel(result[0]);
+  }
+
+
+  public async getAllBands(): Promise<Band[]>{
+    const result = await this.getConnection()
+      .select("*") 
+      .from(UserDatabase.TABLE_NAME)
+      .where({role: "band"})
+      .orderBy("name","asc");
+
+    return result;
+    console.log(result[0]);
   }
 };

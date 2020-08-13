@@ -39,9 +39,9 @@ export class Band extends Users{
             band.nickname, 
             band.email, 
             band.password,
+            band.role,
             band.description,
-            band.status,
-            band.role);
+            band.status);
       };
 };
 
@@ -50,6 +50,6 @@ export interface BandInputDTO extends UserInputDTO{
     nickname: string;
     email: string;
     password: string;
-    description: string;
     role: string
+    description: string;
 };
