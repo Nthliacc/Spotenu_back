@@ -22,11 +22,15 @@ export class UserBusiness {
         const hashPassword = await hashManager.hash(user.password);
 
         const userDatabase = new UserDatabase();
-        await userDatabase.createUser(id, user.email, user.name, user.nickname, hashPassword, user.role);
+        if(user.role === "BAND"){
+            await userDatabase.createUser(id, user.name, user.nickname, user.email, hashPassword, user.role, user.description);
+        }else{
+            await userDatabase.createUser(id, user.name, user.nickname, user.email, hashPassword, user.role);
+        }
 
         const accessToken =  new Authenticator().generateToken({ id, role: user.role });
 
-        return accessToken;
+        return {id, accessToken};
     }
 
     async getUserByEmailOrNickname(user: LoginInputDTO) {

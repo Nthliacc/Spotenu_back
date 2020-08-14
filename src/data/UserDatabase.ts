@@ -43,16 +43,4 @@ export class UserDatabase extends BaseDatabase {
 
     return Users.toUserModel(result[0]);
   }
-
-
-  public async getAllBands(): Promise<Band[]>{
-    const result = await this.getConnection()
-      .select("*") 
-      .from(UserDatabase.TABLE_NAME)
-      .where({role: "band"})
-      .orderBy("name","asc");
-
-    return result;
-    console.log(result[0]);
-  }
 };

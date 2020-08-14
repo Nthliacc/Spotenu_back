@@ -9,7 +9,7 @@ export class Band extends Users{
         password: string,
         role: UsersRole,
         private description: string,
-        private status: boolean = false, 
+        private status: number = 0, 
     ){ 
         super(id, name, nickname, email, password, role)
     };
@@ -19,18 +19,18 @@ export class Band extends Users{
     getNickname = () => this.nickname;
     getEmail = () => this.email;
     getPassword = () => this.password;
+    getRole = () => this.role;
     getDescription = () => this.description;
     getStatus = () => this.status;
-    getRole = () => this.role;
 
     setId = (id: string) => this.id = id;
     setName = (name: string) => this.name = name;
     setNickame = (nickname: string) => this.nickname = nickname;
     setEmail = (email: string) => this.email = email;
     setPassword = (password: string) => this.password = password;
-    setDescription = (description: string) => this.description = description;
-    setStatus = (status: boolean) => this.status = status;
     setRole = (role: UsersRole) => this.role = role;
+    setDescription = (description: string) => this.description = description;
+    setStatus = (status: number) => this.status = status;
 
     static toBandModel(band: any): Band{
         return new Band(

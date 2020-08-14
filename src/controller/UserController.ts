@@ -29,9 +29,9 @@ export class UserController {
                 };
             } else {
                 input = {
-                    email: req.body.email,
                     name: req.body.name,
                     nickname: req.body.nickname,
+                    email: req.body.email,
                     password: req.body.password,
                     role: req.body.role
                 };
@@ -39,7 +39,7 @@ export class UserController {
              
             const token = await new UserBusiness().createUser(input);
 
-            res.status(200).send({ token });
+            res.status(200).send({ message: token });
 
         } catch (error) {
             res.status(400).send({ error: error.message });
@@ -48,7 +48,7 @@ export class UserController {
     }
 
     async login(req: Request, res: Response) {
-
+        // TO DO - bandas não aprovadas não podem fazer login
         try {
             const loginData: LoginInputDTO = {
                 emailOrNickname: req.body.emailOrNickname,
@@ -64,5 +64,4 @@ export class UserController {
         }
         await BaseDatabase.destroyConnection();
     }
-
 };
