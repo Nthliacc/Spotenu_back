@@ -1,6 +1,7 @@
 import { Users, UsersRole, UserInputDTO } from "./Users";
 
 export class Band extends Users{
+    
     constructor(
         id: string,
         name: string,
@@ -8,10 +9,10 @@ export class Band extends Users{
         email: string,
         password: string,
         role: UsersRole,
-        private description: string,
-        private status: boolean = false, 
+        status: number = 0, 
+        private description: string
     ){ 
-        super(id, name, nickname, email, password, role)
+        super(id, name, nickname, email, password, role, status)
     };
 
     getId = () => this.id;
@@ -19,18 +20,18 @@ export class Band extends Users{
     getNickname = () => this.nickname;
     getEmail = () => this.email;
     getPassword = () => this.password;
+    getRole = () => this.role;
     getDescription = () => this.description;
     getStatus = () => this.status;
-    getRole = () => this.role;
 
     setId = (id: string) => this.id = id;
     setName = (name: string) => this.name = name;
     setNickame = (nickname: string) => this.nickname = nickname;
     setEmail = (email: string) => this.email = email;
     setPassword = (password: string) => this.password = password;
-    setDescription = (description: string) => this.description = description;
-    setStatus = (status: boolean) => this.status = status;
     setRole = (role: UsersRole) => this.role = role;
+    setDescription = (description: string) => this.description = description;
+    setStatus = (status: number) => this.status = status;
 
     static toBandModel(band: any): Band{
         return new Band(
@@ -39,9 +40,9 @@ export class Band extends Users{
             band.nickname, 
             band.email, 
             band.password,
-            band.description,
+            band.role,
             band.status,
-            band.role);
+            band.description);
       };
 };
 
@@ -50,6 +51,7 @@ export interface BandInputDTO extends UserInputDTO{
     nickname: string;
     email: string;
     password: string;
+    role: string,
+    status?: number,
     description: string;
-    role: string
 };

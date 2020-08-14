@@ -18,38 +18,37 @@ export class UserController {
             };
 
             let input: BandInputDTO | UserInputDTO;
-            if (type === "Band"){
+            if (type === "ADMIN" || type === "FREE_USER" || type === "PREMIUM_USER"){
+                input = {
+                    name: req.body.name,
+                    nickname: req.body.nickname,
+                    email: req.body.email,
+                    password: req.body.password,
+                    role: req.body.role
+                };
+            } else {
                 input = {
                     name: req.body.name,
                     nickname: req.body.nickname,
                     email: req.body.email,                   
                     password: req.body.password,
-                    description: req.body.description,
-                    role: req.body.role
-                };
-            } else {
-                input = {
-                    email: req.body.email,
-                    name: req.body.name,
-                    nickname: req.body.nickname,
-                    password: req.body.password,
-                    role: req.body.role
+                    role: req.body.role,
+                    description: req.body.description
                 };
             };
-             
+             console.log("Input: ", input);
             const token = await new UserBusiness().createUser(input);
 
-            res.status(200).send({ token });
+            res.status(200).send({ message: token });
 
         } catch (error) {
             res.status(400).send({ error: error.message });
         }
-
         await BaseDatabase.destroyConnection();
     }
 
     async login(req: Request, res: Response) {
-
+        // TO DO - bandas não aprovadas não podem fazer login
         try {
             const loginData: LoginInputDTO = {
                 emailOrNickname: req.body.emailOrNickname,
@@ -63,8 +62,6 @@ export class UserController {
         } catch (error) {
             res.status(400).send({ error: error.message });
         }
-
         await BaseDatabase.destroyConnection();
     }
-
-}
+};

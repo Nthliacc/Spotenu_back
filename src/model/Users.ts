@@ -5,7 +5,8 @@ export class Users{
         protected nickname: string,
         protected email: string,
         protected password: string,
-        protected role: UsersRole
+        protected role: UsersRole,
+        protected status?: number
     ){}
 
     getId = () => this.id;
@@ -14,6 +15,7 @@ export class Users{
     getNickname = () => this.nickname;
     getPassword = () => this.password;
     getRole = () => this.role;
+    getStatus = () => this.status;
 
     setId = (id: string) => this.id = id;
     setName = (name: string) => this.name = name;
@@ -44,7 +46,8 @@ export class Users{
             user.nickname, 
             user.email, 
             user.password, 
-            Users.stringToUserRole(user.role));
+            Users.stringToUserRole(user.role),
+            user.status);
       }
 }
 
@@ -54,6 +57,8 @@ export interface UserInputDTO{
     name: string;
     nickname: string;
     role: string;
+    status?: number;
+    description?: string;
 }
 
 export interface LoginInputDTO{
