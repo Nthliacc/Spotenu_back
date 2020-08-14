@@ -1,13 +1,14 @@
-import { UserInputDTO, LoginInputDTO } from "../model/Users";
+import { UserInputDTO, LoginInputDTO, Users } from "../model/Users";
 import { UserDatabase } from "../data/UserDatabase";
 import { IdGenerator } from "../services/IdGenerator";
 import { HashManager } from "../services/HashManager";
 import { Authenticator } from "../services/Authenticator";
-import { BandInputDTO } from "../model/Band";
+import { BandInputDTO, Band } from "../model/Band";
+import { BandDatabase } from "../data/BandDatabase";
 
 export class UserBusiness {
 
-    async createUser(user: UserInputDTO | BandInputDTO) {
+    async createUser(user: BandInputDTO| UserInputDTO ) {
 
         const idGenerator = new IdGenerator();
         const id = idGenerator.generate();
@@ -20,12 +21,11 @@ export class UserBusiness {
 
         const hashManager = new HashManager();
         const hashPassword = await hashManager.hash(user.password);
-
-        const userDatabase = new UserDatabase();
+        
         if(user.role === "BAND"){
-            await userDatabase.createUser(id, user.name, user.nickname, user.email, hashPassword, user.role, user.description);
+            await new BandDatabase().createBand(id, user.name, user.nickname, user.email, hashPassword, user.role, user.status, user.description as string);
         }else{
-            await userDatabase.createUser(id, user.name, user.nickname, user.email, hashPassword, user.role);
+            await new UserDatabase().createUser(id, user.name, user.nickname, user.email, hashPassword, user.role);
         }
 
         const accessToken =  new Authenticator().generateToken({ id, role: user.role });
@@ -37,6 +37,10 @@ export class UserBusiness {
 
         const userDatabase = new UserDatabase();
         const userFromDB = await userDatabase.getUserByEmailOrNickname(user.emailOrNickname);
+        
+        if(userFromDB.getRole() === "BAND" && userFromDB.getStatus() === 0){
+            throw new Error("Your band is under analysis.")
+        }
 
         const hashManager = new HashManager();
         const hashCompare = await hashManager.compare(user.password, userFromDB.getPassword());

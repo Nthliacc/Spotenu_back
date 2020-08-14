@@ -12,9 +12,7 @@ export class UserDatabase extends BaseDatabase {
     nickname: string,
     email: string,
     password: string,
-    role: string,
-    description?: string,
-    status?: number
+    role: string
   ): Promise<void> {
     try {
       await this.getConnection()
@@ -24,9 +22,7 @@ export class UserDatabase extends BaseDatabase {
           name,
           nickname,
           password,
-          role,
-          description,
-          status
+          role
         })
         .into(UserDatabase.TABLE_NAME);
     } catch (error) {
@@ -34,7 +30,7 @@ export class UserDatabase extends BaseDatabase {
     }
   }
 
-  public async getUserByEmailOrNickname(emailOrNickname: string ): Promise<Users> {
+  public async getUserByEmailOrNickname(emailOrNickname: string ): Promise<Users | Band> {
     const result = await this.getConnection()
       .select("*")
       .from(UserDatabase.TABLE_NAME)

@@ -1,6 +1,7 @@
 import { Users, UsersRole, UserInputDTO } from "./Users";
 
 export class Band extends Users{
+    
     constructor(
         id: string,
         name: string,
@@ -8,10 +9,10 @@ export class Band extends Users{
         email: string,
         password: string,
         role: UsersRole,
-        private description: string,
-        private status: number = 0, 
+        status: number = 0, 
+        private description: string
     ){ 
-        super(id, name, nickname, email, password, role)
+        super(id, name, nickname, email, password, role, status)
     };
 
     getId = () => this.id;
@@ -40,8 +41,8 @@ export class Band extends Users{
             band.email, 
             band.password,
             band.role,
-            band.description,
-            band.status);
+            band.status,
+            band.description);
       };
 };
 
@@ -50,6 +51,7 @@ export interface BandInputDTO extends UserInputDTO{
     nickname: string;
     email: string;
     password: string;
-    role: string
+    role: string,
+    status?: number,
     description: string;
 };

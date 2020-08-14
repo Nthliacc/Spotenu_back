@@ -18,16 +18,7 @@ export class UserController {
             };
 
             let input: BandInputDTO | UserInputDTO;
-            if (type === "Band"){
-                input = {
-                    name: req.body.name,
-                    nickname: req.body.nickname,
-                    email: req.body.email,                   
-                    password: req.body.password,
-                    role: req.body.role,
-                    description: req.body.description                    
-                };
-            } else {
+            if (type === "ADMIN" || type === "FREE_USER" || type === "PREMIUM_USER"){
                 input = {
                     name: req.body.name,
                     nickname: req.body.nickname,
@@ -35,8 +26,17 @@ export class UserController {
                     password: req.body.password,
                     role: req.body.role
                 };
+            } else {
+                input = {
+                    name: req.body.name,
+                    nickname: req.body.nickname,
+                    email: req.body.email,                   
+                    password: req.body.password,
+                    role: req.body.role,
+                    description: req.body.description
+                };
             };
-             
+             console.log("Input: ", input);
             const token = await new UserBusiness().createUser(input);
 
             res.status(200).send({ message: token });
