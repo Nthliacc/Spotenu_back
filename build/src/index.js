@@ -12,7 +12,7 @@ const app = express_1.default();
 app.use(express_1.default.json());
 app.use("/user", userRouter_1.userRouter);
 app.use("/admin", adminRouter_1.adminRouter);
-const server = app.listen(3000, () => {
+const server = app.listen(process.env.PORT || 3003, () => {
     if (server) {
         const address = server.address();
         console.log(`Servidor rodando em http://localhost:${address.port}`);
