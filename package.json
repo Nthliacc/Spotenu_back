@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node-dev ./src/index.ts"
+    "start": "node build/src/index.js",
+    "dev": "ts-node-dev ./src/index.ts",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Nathalia Costa",
@@ -27,8 +29,11 @@
     "mysql": "^2.18.1",
     "ts-jest": "^26.1.0",
     "ts-node": "^8.10.2",
-    "ts-node-dev": "^1.0.0-pre.57",
     "typescript": "^3.9.6",
     "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.7",
+    "ts-node-dev": "^1.0.0-pre.60"
   }
 }
